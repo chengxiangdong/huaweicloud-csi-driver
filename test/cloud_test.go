@@ -36,7 +36,7 @@ func TestLoadConfig(t *testing.T) {
 	assertBasicObj(t, "secretKey", cc.Global.SecretKey, secretKey)
 	assertBasicObj(t, "projectID", cc.Global.ProjectID, projectID)
 	assertBasicObj(t, "authURL", cc.Global.AuthURL, "https://iam.myhuaweicloud.com:443/v3/")
-	assertBasicObj(t, "cloud", cc.Global.AuthURL, "myhuaweicloud.com")
+	assertBasicObj(t, "cloud", cc.Global.Cloud, "myhuaweicloud.com")
 }
 
 func TestEndpoint(t *testing.T) {
