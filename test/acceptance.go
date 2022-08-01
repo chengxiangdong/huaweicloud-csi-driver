@@ -9,7 +9,6 @@ import (
 	"github.com/huaweicloud/huaweicloud-csi-driver/pkg/utils"
 )
 
-
 const configFile = "./cloud_config"
 
 var (
@@ -47,4 +46,3 @@ project-id=%s
 	}
 	return nil
 }
-

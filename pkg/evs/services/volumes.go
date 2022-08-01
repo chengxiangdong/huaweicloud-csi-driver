@@ -17,13 +17,18 @@ const (
 	EvsAvailableStatus = "available"
 )
 
-func CreateVolume(c *config.CloudCredentials, createOpts *cloudvolumes.CreateOpts) (*cloudvolumes.JobResponse, error) {
-	client, err := getEvsV2Client(c)
+func CreateVolume(c *config.CloudCredentials, otps *cloudvolumes.CreateOpts) (string, error) {
+	client, err := getEvsV21Client(c)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	return cloudvolumes.Create(client, *createOpts).Extract()
+	job, err := cloudvolumes.Create(client, *otps).Extract()
+	if err != nil {
+		return "", fmt.Errorf("Error creating EVS Volume, error: %s, createOpts: %#v", err, otps)
+	}
+
+	return WaitForCreateEvsJob(c, job.JobID)
 }
 
 func GetVolume(c *config.CloudCredentials, id string) (*cloudvolumes.Volume, error) {
@@ -51,7 +56,7 @@ func GetVolumeDevicePath(c *config.CloudCredentials, id string) (string, error) 
 }
 
 func ExpandVolume(c *config.CloudCredentials, id string, newSize int) error {
-	client, err := getEvsV2Client(c)
+	client, err := getEvsV21Client(c)
 	if err != nil {
 		return err
 	}
@@ -125,7 +130,7 @@ func WaitForCreateEvsJob(c *config.CloudCredentials, jobID string) (string, erro
 }
 
 func getEvsV2Client(c *config.CloudCredentials) (*golangsdk.ServiceClient, error) {
-	client, err := c.EvsV21Client()
+	client, err := c.EvsV2Client()
 	if err != nil {
 		logMsg := fmt.Sprintf("Failed create EVS V2 client: %s", err)
 		return nil, status.Error(codes.Internal, logMsg)

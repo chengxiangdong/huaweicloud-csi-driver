@@ -161,7 +161,7 @@ func (c *CloudCredentials) EvsV2Client() (*golangsdk.ServiceClient, error) {
 }
 
 func (c *CloudCredentials) EvsV21Client() (*golangsdk.ServiceClient, error) {
-	return newServiceClient(c, "evsV2.1", c.Global.Region)
+	return newServiceClient(c, "evsV21", c.Global.Region)
 }
 
 func (c *CloudCredentials) EvsV1Client() (*golangsdk.ServiceClient, error) {
