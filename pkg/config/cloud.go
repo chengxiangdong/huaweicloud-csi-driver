@@ -51,6 +51,10 @@ var allServiceCatalog = map[string]serviceCatalog{
 		Name:    "evs",
 		Version: "v1",
 	},
+	"evsV2": {
+		Name:    "evs",
+		Version: "v2",
+	},
 	"evsV21": {
 		Name:    "evs",
 		Version: "v2.1",
@@ -152,8 +156,12 @@ func (c *CloudCredentials) EcsV1Client() (*golangsdk.ServiceClient, error) {
 	return newServiceClient(c, "ecs", c.Global.Region)
 }
 
+func (c *CloudCredentials) EvsV2Client() (*golangsdk.ServiceClient, error) {
+	return newServiceClient(c, "evsV2", c.Global.Region)
+}
+
 func (c *CloudCredentials) EvsV21Client() (*golangsdk.ServiceClient, error) {
-	return newServiceClient(c, "evsV21", c.Global.Region)
+	return newServiceClient(c, "evsV2.1", c.Global.Region)
 }
 
 func (c *CloudCredentials) EvsV1Client() (*golangsdk.ServiceClient, error) {

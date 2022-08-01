@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-evs-nginx
+spec:
+  containers:
+    - image: nginx
+      imagePullPolicy: IfNotPresent
+      name: nginx
+      ports:
+        - containerPort: 80
+          protocol: TCP
+      volumeDevices:
+        - devicePath: /dev/evs
+          name: csi-data-evs
+  volumes:
+    - name: csi-data-evs
+      persistentVolumeClaim:
+        claimName: csi-pvc-evs
+        readOnly: false

@@ -4,7 +4,23 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 )
+
+// MyDuration is the encoding.TextUnmarshaler interface for time.Duration
+type MyDuration struct {
+	time.Duration
+}
+
+// UnmarshalText is used to convert from text to Duration
+func (d *MyDuration) UnmarshalText(text []byte) error {
+	res, err := time.ParseDuration(string(text))
+	if err != nil {
+		return err
+	}
+	d.Duration = res
+	return nil
+}
 
 func ParseEndpoint(ep string) (string, string, error) {
 	ep = strings.ToLower(ep)
