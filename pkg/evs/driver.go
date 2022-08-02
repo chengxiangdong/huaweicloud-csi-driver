@@ -35,7 +35,7 @@ type EvsDriver struct {
 	cloud      config.CloudCredentials
 
 	ids *identityServer
-	cs  *controllerServer
+	cs  *ControllerServer
 	ns  *nodeServer
 
 	vcap  []*csi.VolumeCapability_AccessMode
@@ -78,7 +78,7 @@ func NewDriver(cloud *config.CloudCredentials, endpoint, cluster, nodeID string)
 		})
 
 	d.ids = &identityServer{Driver: d}
-	d.cs = &controllerServer{Driver: d}
+	d.cs = &ControllerServer{Driver: d}
 	d.ns = &nodeServer{Driver: d}
 
 	return d
@@ -140,6 +140,18 @@ func (d *EvsDriver) ValidateControllerServiceRequest(c csi.ControllerServiceCapa
 		}
 	}
 	return status.Error(codes.InvalidArgument, fmt.Sprintf("%s", c))
+}
+
+func (d *EvsDriver) GetControllerServer() *ControllerServer {
+	return d.cs
+}
+
+func (d *EvsDriver) GetIdentityServer() *identityServer {
+	return d.ids
+}
+
+func (d *EvsDriver) GetNodeServer() *nodeServer {
+	return d.ns
 }
 
 func (d *EvsDriver) GetVolumeCapabilityAccessModes() []*csi.VolumeCapability_AccessMode {
