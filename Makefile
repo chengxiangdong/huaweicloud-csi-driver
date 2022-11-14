@@ -73,7 +73,9 @@ clean:
 	@for binary in $(ALL); do rm -rf $${binary}*; done
 
 test: work
-	go test -tags=unit $(shell go list ./... | sed -e '/sanity/ { N; d; }' | sed -e '/tests/ {N; d;}') $(TESTARGS)
+	mkdir -p ./_output/coverage/
+	go test --race --v ./pkg/... -coverprofile=./_output/coverage/coverage_pkg.txt -covermode=atomic
+	go test --race --v ./cmd/... -coverprofile=./_output/coverage/coverage_cmd.txt -covermode=atomic
 
 lint:
 	go run github.com/golangci/golangci-lint/cmd/golangci-lint@v1.49.0 run ./...

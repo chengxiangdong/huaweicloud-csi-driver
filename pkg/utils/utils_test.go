@@ -4,12 +4,11 @@ import (
 	"testing"
 
 	"github.com/huaweicloud/huaweicloud-csi-driver/pkg/common"
-	"github.com/huaweicloud/huaweicloud-csi-driver/pkg/utils"
 )
 
 func TestBytesToGB(t *testing.T) {
 	sizeGB := 1
-	sizeBytes := utils.BytesToGB(sizeGB)
+	sizeBytes := BytesToGB(sizeGB)
 
 	expected := int64(sizeGB * common.GbByteSize)
 	if sizeBytes != expected {
@@ -18,7 +17,7 @@ func TestBytesToGB(t *testing.T) {
 }
 
 func TestRoundUpSize(t *testing.T) {
-	actualSize := utils.RoundUpSize(1500*1024*1024, common.GbByteSize)
+	actualSize := RoundUpSize(1500*1024*1024, common.GbByteSize)
 	expectedSize := int64(2)
 
 	if actualSize != expectedSize {

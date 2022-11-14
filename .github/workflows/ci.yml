@@ -58,3 +58,10 @@ jobs:
           go-version: 1.18.x
       - name: make test
         run: make test
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./_output/coverage/coverage_pkg.txt,./_output/coverage/coverage_cmd.txt
+          flags: unittests
+          fail_ci_if_error: true
+          verbose: true
