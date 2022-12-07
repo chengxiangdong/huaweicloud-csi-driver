@@ -18,6 +18,30 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+function usage() {
+  echo "This script run E2E tests by ginkgo."
+  echo "      Usage: hack/run-e2e-test.sh <MODULE_NAME>"
+  echo "    Example: hack/run-e2e-test.sh SFS"
+  echo
+}
+
+if [[ $# -lt 1 ]]; then
+  usage
+  exit 1
+fi
+
+labels=${1}
+if [[ -z "${labels}" ]]; then
+  usage
+  exit 1
+fi
+
+if [[ "${labels}" = "NONE" ]]; then
+  echo "No test module is specified, all E2E tests are skipped."
+  echo
+  exit 0
+fi
+
 REPO_ROOT=$(dirname "${BASH_SOURCE[0]}")/..
 
 # create cluster
@@ -36,7 +60,7 @@ export PATH=$PATH:$GOPATH/bin
 
 # run e2e test
 set +e
-ginkgo -v --race --trace --fail-fast -p --randomize-all ./test/e2e/
+ginkgo -v --race --trace --fail-fast -p --randomize-all --label-filter=${labels}  ./test/e2e/
 TESTING_RESULT=$?
 
 # Collect logs

@@ -74,6 +74,8 @@ jobs:
           # Number of commits to fetch. 0 indicates all history for all branches and tags.
           # We need to guess version via git tags.
           fetch-depth: 0
+      - name: chekc model changed
+        run: ./hack/check-model-changed.sh
       - name: install Go
         uses: actions/setup-go@v3
         with:
@@ -84,7 +86,7 @@ jobs:
       - name: run e2e
         run: |
           export ARTIFACTS_PATH=${{ github.workspace }}/e2e-logs/${{ matrix.k8s }}
-          sh hack/run-e2e-test.sh
+          ./hack/run-e2e-test.sh "NONE${E2E_LABEL}"
       - name: upload logs
         if: always()
         uses: actions/upload-artifact@v3
