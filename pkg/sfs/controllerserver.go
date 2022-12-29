@@ -40,6 +40,7 @@ type controllerServer struct {
 func (cs *controllerServer) CreateVolume(_ context.Context, req *csi.CreateVolumeRequest) (
 	*csi.CreateVolumeResponse, error) {
 	log.Infof("CreateVolume called with request %v", protosanitizer.StripSecrets(*req))
+
 	client, err := cs.Driver.cloud.SFSV2Client()
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to create SFS v2 client: %v", err)

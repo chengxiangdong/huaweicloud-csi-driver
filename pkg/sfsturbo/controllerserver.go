@@ -54,6 +54,7 @@ const (
 
 func (cs *controllerServer) CreateVolume(_ context.Context, req *csi.CreateVolumeRequest) (
 	*csi.CreateVolumeResponse, error) {
+
 	log.Infof("CreateVolume called with request %v", protosanitizer.StripSecrets(*req))
 	cloud := cs.Driver.cloud
 

@@ -36,6 +36,7 @@ type controllerServer struct {
 func (cs *controllerServer) CreateVolume(_ context.Context, req *csi.CreateVolumeRequest) (
 	*csi.CreateVolumeResponse, error) {
 	log.Infof("CreateVolume: called with args %v", protosanitizer.StripSecrets(*req))
+
 	credentials := cs.Driver.cloud
 
 	volName := req.GetName()
