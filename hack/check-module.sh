@@ -2,6 +2,8 @@
 
 shaId=$(git log --before="1 week ago" --pretty=format:"%h" -n 1)
 echo $shaId
+echo $1
+echo $2
 files_changed=$(git diff $shaId --name-only "cmd/" "pkg/" "test/" | grep ".go" )
 
 echo "File(s) Changed:"
