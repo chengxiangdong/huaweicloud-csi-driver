@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files_changed=$(git diff $1 $2 --name-only "cmd/" "pkg/" "test/" | grep ".go" )
+files_changed=$(git diff $1 --name-only "cmd/" "pkg/" "test/" | grep ".go" )
 
 echo "File(s) Changed:"
 echo "$files_changed"
