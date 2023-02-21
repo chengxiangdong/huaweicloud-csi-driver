@@ -69,9 +69,7 @@ push-images: $(addprefix push-image-,$(ALL))
 
 push-image-%:
 	@echo ":: Push image $* to $(REGISTRY) ::"
-ifneq ($(and $(REGISTRY_USERNAME),$(REGISTRY_PASSWORD)),)
 	docker login -u ${REGISTRY_USERNAME} -p ${REGISTRY_PASSWORD} ${REGISTRY_SERVER}
-endif
 	docker push $(REGISTRY)/$*:$(VERSION)
 
 clean:
