@@ -26,7 +26,20 @@ jobs:
           REGISTRY_USER_NAME: ${{secrets.SWR_REGISTRY_USER_NAME}}
           REGISTRY_PASSWORD: ${{secrets.SWR_REGISTRY_PASSWORD}}
           REGISTRY_SERVER_ADDRESS: ${{secrets.SWR_REGISTRY_SERVER_ADDRESS}}
-          VERSION: ${{ github.ref_name }}
         run: |
-          echo $(git log -n 3)
-          echo ${{ github.ref_name }}
+          module=""
+          if echo "${{ github.ref_name }}" | grep -q "evs-"; then
+            module="evs-csi-plugin"
+          elif echo "${{ github.ref_name }}" | grep -q "sfs-"; then
+            module="sfs-csi-plugin"
+          elif echo "${{ github.ref_name }}" | grep -q "sfsturbo-"; then
+            module="sfsturbo-csi-plugin"
+          elif echo "${{ github.ref_name }}" | grep -q "obs-"; then
+            module="obs-csi-plugin"
+          else
+            echo "not any tags matched" 
+            exit 1
+          fi
+          version=$(echo "${{ github.ref_name }}" | sed 's/evs-/v/'| sed 's/sfs-/v/'| sed 's/sfsturbo-/v/'| sed 's/obs-/v/')
+          export VERSION=${version}
+          make "build-cmd-${module}"
