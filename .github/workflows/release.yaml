@@ -22,9 +22,9 @@ jobs:
           go-version: 1.19.x
       - name: build images
         env:
-          REGISTRY_SERVER: ${{secrets.SWR_REGISTRY_SERVER_ADDRESS}}
+          REGISTRY_SERVER: ${{secrets.SWR_REGISTRY_SERVER}}
           REGISTRY: ${{secrets.SWR_REGISTRY}}
-          REGISTRY_USER_NAME: ${{secrets.SWR_REGISTRY_USER_NAME}}
+          REGISTRY_USERNAME: ${{secrets.SWR_REGISTRY_REGISTRY_USERNAME}}
           REGISTRY_PASSWORD: ${{secrets.SWR_REGISTRY_PASSWORD}}
         run: |
           module=""
@@ -45,3 +45,4 @@ jobs:
           echo ${version}
           export VERSION=${version}
           make "image-${module}"
+          make "push-image-${module}"
