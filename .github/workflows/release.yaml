@@ -22,8 +22,8 @@ jobs:
           go-version: 1.19.x
       - name: build images
         env:
-          REGISTRY_SERVER: ${{secrets.SWR_REGISTRY_SERVER}}
-          REGISTRY: ${{secrets.SWR_REGISTRY}}
+          REGISTRY_SERVER: ${{vars.SWR_REGISTRY_SERVER}}
+          REGISTRY: ${{vars.SWR_REGISTRY}}
           REGISTRY_USERNAME: ${{secrets.SWR_REGISTRY_REGISTRY_USERNAME}}
           REGISTRY_PASSWORD: ${{secrets.SWR_REGISTRY_PASSWORD}}
         run: |
