@@ -44,4 +44,4 @@ jobs:
           echo ${module}
           echo ${version}
           export VERSION=${version}
-          make "build-cmd-${module}"
+          make "image-${module}"
