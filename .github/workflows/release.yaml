@@ -45,5 +45,5 @@ jobs:
           echo ${version}
           export VERSION=${version}
           make "image-${module}"
-          docker login -u ${REGISTRY_USERNAME} -p ${REGISTRY_PASSWORD} ${REGISTRY_SERVER}
+          docker login -u "${{secrets.SWR_REGISTRY_REGISTRY_USERNAME}}" -p "${{secrets.SWR_REGISTRY_PASSWORD}}" ${{vars.SWR_REGISTRY_SERVER}}
           make "push-image-${module}"
