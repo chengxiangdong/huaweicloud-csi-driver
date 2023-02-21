@@ -22,10 +22,10 @@ jobs:
           go-version: 1.19.x
       - name: build images
         env:
+          REGISTRY_SERVER: ${{secrets.SWR_REGISTRY_SERVER_ADDRESS}}
           REGISTRY: ${{secrets.SWR_REGISTRY}}
           REGISTRY_USER_NAME: ${{secrets.SWR_REGISTRY_USER_NAME}}
           REGISTRY_PASSWORD: ${{secrets.SWR_REGISTRY_PASSWORD}}
-          REGISTRY_SERVER_ADDRESS: ${{secrets.SWR_REGISTRY_SERVER_ADDRESS}}
         run: |
           module=""
           if echo "${{ github.ref_name }}" | grep -q "evs-"; then
@@ -41,5 +41,7 @@ jobs:
             exit 1
           fi
           version=$(echo "${{ github.ref_name }}" | sed 's/evs-/v/'| sed 's/sfs-/v/'| sed 's/sfsturbo-/v/'| sed 's/obs-/v/')
+          echo ${module}
+          echo ${version}
           export VERSION=${version}
           make "build-cmd-${module}"
